@@ -1,95 +1,24 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "mtbf_kpi_global",
+  "name": "header_banner",
   "position": {
-    "x": 912,
-    "y": 80,
-    "z": 2003,
-    "height": 100,
-    "width": 340,
-    "tabOrder": 4
+    "x": 24,
+    "y": 0,
+    "z": 0,
+    "height": 70,
+    "width": 1232,
+    "tabOrder": 0
   },
   "visual": {
-    "visualType": "card",
-    "query": {
-      "queryState": {
-        "Values": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Medidas"
-                    }
-                  },
-                  "Property": "MTBF (KM)"
-                }
-              },
-              "queryRef": "_Medidas.MTBF (KM)",
-              "nativeQueryRef": "MTBF (KM)"
-            }
-          ]
-        }
-      }
-    },
+    "visualType": "image",
     "objects": {
-      "labels": [
+      "general": [
         {
           "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1A1A2E'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
+            "imageUrl": {
               "expr": {
                 "Literal": {
-                  "Value": "22D"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Trebuchet MS'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "categoryLabels": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#7A7A8E'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
+                  "Value": "''"
                 }
               }
             }
@@ -111,7 +40,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'MTBF Global (KM)'"
+                  "Value": "'Painel MTBF \u2014 Confiabilidade da Frota'"
                 }
               }
             },
@@ -129,7 +58,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "16D"
                 }
               }
             },
@@ -170,7 +99,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Distância média entre falhas'"
+                  "Value": "'An\u00e1lise de quilometragem entre falhas por regional'"
                 }
               }
             },
@@ -364,7 +293,7 @@
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "36D"
+                  "Value": "80D"
                 }
               }
             },

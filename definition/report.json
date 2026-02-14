@@ -37,6 +37,37 @@
           "type": "BaseTheme"
         }
       ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "entrega-rapida.png",
+          "path": "RegisteredResources/entrega-rapida.png",
+          "type": "Image"
+        },
+        {
+          "name": "alerta.png",
+          "path": "RegisteredResources/alerta.png",
+          "type": "Image"
+        },
+        {
+          "name": "velocimetro.png",
+          "path": "RegisteredResources/velocimetro.png",
+          "type": "Image"
+        },
+        {
+          "name": "globo.png",
+          "path": "RegisteredResources/globo.png",
+          "type": "Image"
+        },
+        {
+          "name": "edenred-logo.png",
+          "path": "RegisteredResources/edenred-logo.png",
+          "type": "Image"
+        }
+      ]
     }
   ],
   "settings": {

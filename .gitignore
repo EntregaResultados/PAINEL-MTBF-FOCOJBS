@@ -2,6 +2,18 @@
 # .gitignore — Painel MTBF Edenred
 # ===========================================
 
+# Agentes e workflows internos (específico de máquina/dev)
+.agent/
+
+# Gemini/AI agent settings
+.gemini/
+
+# Databricks config e credenciais
+databricks.yml
+.databricks/
+*.env
+.env.*
+
 # Queries exploratórias (scripts de diagnóstico e validação local)
 _exploratory_queries/
 

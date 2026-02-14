@@ -3,10 +3,10 @@
   "name": "mtbf_line_chart_01",
   "position": {
     "x": 24,
-    "y": 80,
+    "y": 240,
     "z": 1000,
     "height": 400,
-    "width": 880,
+    "width": 1228,
     "tabOrder": 0
   },
   "visual": {
