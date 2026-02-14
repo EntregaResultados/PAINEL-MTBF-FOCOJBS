@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "MTBF-PLACA-CARLOS"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a7cf0786-ba36-452f-bff7-e9551fe82deb"
+  }
+}
