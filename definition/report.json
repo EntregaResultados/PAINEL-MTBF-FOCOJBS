@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.0.0/schema.json",
   "themeCollection": {
     "baseTheme": {
       "name": "CY25SU12",
@@ -35,37 +35,6 @@
           "name": "CY25SU12",
           "path": "BaseThemes/CY25SU12.json",
           "type": "BaseTheme"
-        }
-      ]
-    },
-    {
-      "name": "RegisteredResources",
-      "type": "RegisteredResources",
-      "items": [
-        {
-          "name": "entrega-rapida.png",
-          "path": "RegisteredResources/entrega-rapida.png",
-          "type": "Image"
-        },
-        {
-          "name": "alerta.png",
-          "path": "RegisteredResources/alerta.png",
-          "type": "Image"
-        },
-        {
-          "name": "velocimetro.png",
-          "path": "RegisteredResources/velocimetro.png",
-          "type": "Image"
-        },
-        {
-          "name": "globo.png",
-          "path": "RegisteredResources/globo.png",
-          "type": "Image"
-        },
-        {
-          "name": "edenred-logo.png",
-          "path": "RegisteredResources/edenred-logo.png",
-          "type": "Image"
         }
       ]
     }

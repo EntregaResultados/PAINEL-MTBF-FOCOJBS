@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "mtbf_kpi_veiculos",
   "position": {
-    "x": 24,
-    "y": 80,
-    "z": 2000,
-    "height": 100,
-    "width": 280,
-    "tabOrder": 1
+    "x": 24.567118041938684,
+    "y": 111.49692034418327,
+    "z": 3000,
+    "height": 120.94581189877506,
+    "width": 279.68719001591734,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "card",

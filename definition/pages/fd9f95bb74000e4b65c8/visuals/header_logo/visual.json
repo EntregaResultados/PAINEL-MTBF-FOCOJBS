@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "header_logo",
   "position": {
-    "x": 32,
-    "y": 10,
-    "z": 100,
-    "height": 50,
-    "width": 60,
-    "tabOrder": 0
+    "x": 58.583127638469172,
+    "y": 18.897783109183603,
+    "z": 1000,
+    "height": 58.583127638469172,
+    "width": 105.82758541142819,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "image",
@@ -40,29 +40,79 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "false" } } }
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
         }
-      }],
-      "border": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "false" } } }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
         }
-      }],
-      "title": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "false" } } }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
         }
-      }],
-      "padding": [{
-        "properties": {
-          "top": { "expr": { "Literal": { "Value": "0D" } } },
-          "bottom": { "expr": { "Literal": { "Value": "0D" } } },
-          "left": { "expr": { "Literal": { "Value": "0D" } } },
-          "right": { "expr": { "Literal": { "Value": "0D" } } }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
         }
-      }]
+      ]
     },
     "drillFilterOtherVisuals": true
   }
