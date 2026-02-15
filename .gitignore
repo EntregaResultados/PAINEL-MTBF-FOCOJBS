@@ -1,0 +1,18 @@
+# Power BI / Fabric
+.pbi/
+*.pbix
+localSettings.json
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# Agent
+.agent/
+.gemini/
