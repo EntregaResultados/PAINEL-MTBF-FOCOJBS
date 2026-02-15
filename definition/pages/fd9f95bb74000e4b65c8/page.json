@@ -45,7 +45,13 @@
                     }
                   ],
                   "Values": [
-                    [{"Literal": {"Value": "60905L"}}]
+                    [
+                      {
+                        "Literal": {
+                          "Value": "60905L"
+                        }
+                      }
+                    ]
                   ]
                 }
               }

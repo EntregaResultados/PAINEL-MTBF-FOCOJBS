@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "mtbf_kpi_rodagem",
   "position": {
-    "x": 616,
-    "y": 80,
-    "z": 2002,
-    "height": 100,
-    "width": 280,
-    "tabOrder": 3
+    "x": 621.73706429214053,
+    "y": 111.49692034418327,
+    "z": 5000,
+    "height": 120.94581189877506,
+    "width": 279.68719001591734,
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "card",

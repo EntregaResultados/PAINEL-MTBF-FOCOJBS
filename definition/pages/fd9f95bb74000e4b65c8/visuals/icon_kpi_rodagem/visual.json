@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "icon_kpi_rodagem",
   "position": {
-    "x": 622,
-    "y": 86,
-    "z": 3002,
-    "height": 24,
-    "width": 24,
-    "tabOrder": 0
+    "x": 627.40639922489572,
+    "y": 117.16625527693834,
+    "z": 9000,
+    "height": 22.677339731020325,
+    "width": 24.567118041938684,
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "image",
@@ -82,10 +82,34 @@
       "padding": [
         {
           "properties": {
-            "top": { "expr": { "Literal": { "Value": "0D" } } },
-            "bottom": { "expr": { "Literal": { "Value": "0D" } } },
-            "left": { "expr": { "Literal": { "Value": "0D" } } },
-            "right": { "expr": { "Literal": { "Value": "0D" } } }
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
           }
         }
       ]

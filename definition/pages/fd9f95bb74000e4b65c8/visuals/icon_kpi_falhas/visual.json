@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "icon_kpi_falhas",
   "position": {
-    "x": 326,
-    "y": 86,
-    "z": 3001,
-    "height": 24,
-    "width": 24,
-    "tabOrder": 0
+    "x": 332.60098272163145,
+    "y": 117.16625527693834,
+    "z": 8000,
+    "height": 22.677339731020325,
+    "width": 22.677339731020325,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "image",
@@ -82,10 +82,34 @@
       "padding": [
         {
           "properties": {
-            "top": { "expr": { "Literal": { "Value": "0D" } } },
-            "bottom": { "expr": { "Literal": { "Value": "0D" } } },
-            "left": { "expr": { "Literal": { "Value": "0D" } } },
-            "right": { "expr": { "Literal": { "Value": "0D" } } }
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
           }
         }
       ]

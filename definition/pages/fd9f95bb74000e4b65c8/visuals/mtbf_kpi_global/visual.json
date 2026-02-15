@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "mtbf_kpi_global",
   "position": {
-    "x": 912,
-    "y": 80,
-    "z": 2003,
-    "height": 100,
-    "width": 340,
-    "tabOrder": 4
+    "x": 912.76292417356808,
+    "y": 111.49692034418327,
+    "z": 6000,
+    "height": 120.94581189877506,
+    "width": 340.16009596530489,
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "card",
