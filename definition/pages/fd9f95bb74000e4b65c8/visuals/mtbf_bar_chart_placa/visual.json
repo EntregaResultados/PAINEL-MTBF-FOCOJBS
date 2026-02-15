@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "mtbf_line_chart_01",
+  "name": "mtbf_bar_chart_placa",
   "position": {
-    "x": 24.567118041938684,
+    "x": 688,
     "y": 251.34051535214195,
     "z": 2000,
     "height": 445.98768137673306,
-    "width": 648.19396064499767,
-    "tabOrder": 6000
+    "width": 568,
+    "tabOrder": 7000
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
         "Category": {
@@ -23,30 +23,11 @@
                       "Entity": "f_MTBF"
                     }
                   },
-                  "Property": "MesRef"
+                  "Property": "Placa"
                 }
               },
-              "queryRef": "f_MTBF.MesRef",
-              "nativeQueryRef": "MesRef",
-              "active": true
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "f_MTBF"
-                    }
-                  },
-                  "Property": "Info_Adicional_3"
-                }
-              },
-              "queryRef": "f_MTBF.Info_Adicional_3",
-              "nativeQueryRef": "Info_Adicional_3",
+              "queryRef": "f_MTBF.Placa",
+              "nativeQueryRef": "Placa",
               "active": true
             }
           ]
@@ -69,41 +50,37 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Medidas"
+                  }
+                },
+                "Property": "MTBF (KM)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
-      "legend": [
+      "dataPoint": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Bottom'"
-                }
-              }
-            },
-            "labelColor": {
+            "fill": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#2D2D3A'"
+                      "Value": "'#ED1C24'"
                     }
                   }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
                 }
               }
             }
@@ -125,7 +102,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#7A7A8E'"
+                      "Value": "'#2D2D3A'"
                     }
                   }
                 }
@@ -134,7 +111,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "8D"
                 }
               }
             },
@@ -204,20 +181,58 @@
           }
         }
       ],
-      "lineStyles": [
+      "labels": [
         {
           "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "3D"
-                }
-              }
-            },
-            "showMarker": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2D2D3A'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -239,7 +254,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Evolução MTBF (KM) por Regional'"
+                  "Value": "'MTBF por Placa'"
                 }
               }
             },
@@ -298,7 +313,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Últimos 12 meses · Dados mensais por regional JBS'"
+                  "Value": "'Top 15 · Ranking de quilometragem entre falhas'"
                 }
               }
             },
@@ -512,7 +527,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "filter_regional",
+        "name": "filter_regional_placa",
         "field": {
           "Column": {
             "Expression": {
@@ -612,34 +627,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "b9e94861adfc0ff524ba",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "f_MTBF"
-              }
-            },
-            "Property": "MesRef"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "77be066256d665ffd97e",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Medidas"
-              }
-            },
-            "Property": "MTBF (KM)"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }
