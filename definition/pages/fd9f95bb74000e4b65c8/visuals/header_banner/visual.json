@@ -286,7 +286,7 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "12D"
                 }
               }
             },
@@ -307,7 +307,7 @@
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "24D"
                 }
               }
             }

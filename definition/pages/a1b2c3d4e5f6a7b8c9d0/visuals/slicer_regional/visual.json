@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
-  "name": "slicer_tipo_operacao",
+  "name": "slicer_regional",
   "position": {
-    "x": 532.91748367897765,
-    "y": 15.118226487346883,
-    "z": 6000,
-    "height": 73.701354125816053,
-    "width": 188.97783109183604,
-    "tabOrder": 13000
+    "x": 200,
+    "y": 15,
+    "z": 5000,
+    "height": 74,
+    "width": 215,
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "f_MTBF"
                     }
                   },
-                  "Property": "Operações"
+                  "Property": "Info_Adicional_3"
                 }
               },
-              "queryRef": "f_MTBF.Operações",
-              "nativeQueryRef": "Operações",
+              "queryRef": "f_MTBF.Info_Adicional_3",
+              "nativeQueryRef": "Info_Adicional_3",
               "active": true
             }
           ]
@@ -138,7 +138,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tipo Operação'"
+                  "Value": "'Regional'"
                 }
               }
             },
@@ -362,5 +362,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5e6051a2cd68f07f6949",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "f_MTBF"
+              }
+            },
+            "Property": "Info_Adicional_3"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }
