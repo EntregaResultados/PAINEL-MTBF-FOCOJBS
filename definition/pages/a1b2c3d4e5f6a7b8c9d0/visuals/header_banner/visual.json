@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "header_banner",
   "position": {
-    "x": 24,
+    "x": 24.567118041938684,
     "y": 0,
     "z": 0,
-    "height": 70,
-    "width": 1232,
+    "height": 98.268472167754737,
+    "width": 1232.1354587187709,
     "tabOrder": 0
   },
   "visual": {
@@ -18,7 +18,7 @@
             "imageUrl": {
               "expr": {
                 "Literal": {
-                  "Value": "''"
+                  "Value": "'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/58BHgAI/AL+hc2rNAAAAABJRU5ErkJggg=='"
                 }
               }
             }
@@ -40,7 +40,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Painel MTBF \u2014 Confiabilidade da Frota'"
+                  "Value": "'Painel MTBF — Análise por Grupo de Peças'"
                 }
               }
             },
@@ -58,7 +58,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "16D"
+                  "Value": "12D"
                 }
               }
             },
@@ -79,7 +79,7 @@
             "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'left'"
+                  "Value": "'right'"
                 }
               }
             }
@@ -99,7 +99,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'An\u00e1lise de quilometragem entre falhas por regional'"
+                  "Value": "'Análise de quilometragem entre falhas por regional'"
                 }
               }
             },
@@ -117,7 +117,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "8D"
                 }
               }
             },
@@ -125,6 +125,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'Trebuchet MS'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'right'"
                 }
               }
             }
