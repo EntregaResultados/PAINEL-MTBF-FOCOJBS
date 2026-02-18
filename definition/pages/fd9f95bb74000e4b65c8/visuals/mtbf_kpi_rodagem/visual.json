@@ -58,7 +58,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trebuchet MS'"
+                  "Value": "'Calibri'"
                 }
               }
             }
@@ -136,7 +136,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trebuchet MS'"
+                  "Value": "'Calibri'"
                 }
               }
             },
@@ -195,7 +195,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trebuchet MS'"
+                  "Value": "'Calibri'"
                 }
               }
             },

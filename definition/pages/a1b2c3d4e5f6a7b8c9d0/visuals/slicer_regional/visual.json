@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "slicer_regional",
   "position": {
-    "x": 319.37253454520294,
+    "x": 200.31650095734619,
     "y": 15.118226487346883,
     "z": 5000,
     "height": 73.701354125816053,
-    "width": 200.31650095734619,
+    "width": 181.4187178481626,
     "tabOrder": 12000
   },
   "visual": {
@@ -362,5 +362,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5e6051a2cd68f07f6949",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "f_MTBF"
+              }
+            },
+            "Property": "Info_Adicional_3"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }
