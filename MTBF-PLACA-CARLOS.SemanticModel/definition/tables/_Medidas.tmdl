@@ -1,0 +1,120 @@
+table _Medidas
+	lineageTag: measures-table-001
+
+	/// Distância total percorrida pela frota.
+	/// Calcula a variação de odômetro (Max KM - Min KM) para cada placa
+	/// e soma o resultado de todas as placas no contexto de filtro.
+	/// Filtra outliers: ignora KM <= 0 e KM > 900000 (dados inválidos).
+	/// Ref: Manager §1.2 + Validação Databricks 2026-02-14
+	measure 'Distancia Total KM' =
+			SUMX(
+			    VALUES('f_MTBF'[Placa]),
+			    VAR MaxKM = CALCULATE(
+			        MAX('f_MTBF'[KM]),
+			        'f_MTBF'[KM] >= 100,
+			        'f_MTBF'[KM] <= 900000
+			    )
+			    VAR MinKM = CALCULATE(
+			        MIN('f_MTBF'[KM]),
+			        'f_MTBF'[KM] >= 100,
+			        'f_MTBF'[KM] <= 900000
+			    )
+			    RETURN IF(
+			        NOT ISBLANK(MaxKM) && NOT ISBLANK(MinKM),
+			        MaxKM - MinKM,
+			        BLANK()
+			    )
+			)
+		formatString: #,##0 "KM"
+		displayFolder: KPIs MTBF
+		lineageTag: med-dist-total-km-001
+
+	/// Quantidade de Falhas (Eventos de Parada).
+	/// Conta eventos distintos de parada (Placa + Data),
+	/// somente para manutenções Corretiva com status concluído.
+	/// Exclui Funilaria e Acessórios (§2.2.4 Manager).
+	/// Ref: Manager §2.1 - Contagem distinta por Placa+Data = 1 Falha.
+	measure 'Qtd Falhas' =
+			VAR _tabelaEventos =
+			    SUMMARIZE(
+			        FILTER(
+			            'f_MTBF',
+			            'f_MTBF'[Tipo_Manutencao] = "Corretiva"
+			            && 'f_MTBF'[Status_Servico] IN {"Cobradas", "Concluidas E Nao Cobradas", "Aprovadas", "Aprovadas Parcialmente"}
+			            && NOT('f_MTBF'[Grupo_Pecas] IN {"Funilaria", "Acessorios"})
+			        ),
+			        'f_MTBF'[Placa],
+			        'f_MTBF'[Data_Inicio]
+			    )
+			RETURN
+			    COUNTROWS(_tabelaEventos)
+		formatString: #,##0
+		displayFolder: KPIs MTBF
+		lineageTag: med-qtd-falhas-002
+
+	/// MTBF em quilômetros (Mean Time Between Failures baseado em distância).
+	/// Fórmula: Distância Total no contexto / Falhas no contexto.
+	/// Funciona em qualquer granularidade: global, por mês, por regional, etc.
+	/// Ref: Manager §1.2 — MkBF = Distância total / Número de Falhas
+	/// Corrigido em 2026-02-14: removido REMOVEFILTERS que distorcia o cálculo mensal.
+	measure 'MTBF (KM)' = DIVIDE([Distancia Total KM], [Qtd Falhas], BLANK())
+		formatString: #,##0 "KM"
+		displayFolder: KPIs MTBF
+		lineageTag: med-mtbf-km-003
+
+	/// Total de Quebras para o gráfico "Quebras por Mês".
+	/// Ref: Manager §5.1.2
+	measure 'Total Quebras' = [Qtd Falhas]
+		formatString: #,##0
+		displayFolder: KPIs MTBF
+		lineageTag: med-total-quebras-004
+
+	/// Rodagem mensal para o gráfico "Rodagem por Mês".
+	/// Ref: Manager §5.1.1
+	measure 'Rodagem Mensal KM' = [Distancia Total KM]
+		formatString: #,##0 "KM"
+		displayFolder: KPIs MTBF
+		lineageTag: med-rodagem-mensal-005
+
+	/// Contagem de placas (veículos) distintos no contexto.
+	measure 'Total Veiculos' = DISTINCTCOUNT('f_MTBF'[Placa])
+		formatString: #,##0
+		displayFolder: KPIs MTBF
+		lineageTag: med-total-veiculos-006
+
+	/// Cor de fundo para o heatmap de Quebras por Sistema.
+	/// Gradiente: Branco (#FFFFFF) → Rosa (#FECACA) → Vermelho Edenred (#ED1C24).
+	/// Baseado na proporção do valor atual vs. o máximo em toda a matrix.
+	/// Ref: §5.2.3 — Heatmap para detectar surtos epidêmicos.
+	measure '_Cor Heatmap Quebras' =
+			VAR _valor = [Total Quebras]
+			VAR _max = CALCULATE([Total Quebras], ALLSELECTED('f_MTBF'[Grupo_Pecas]), ALLSELECTED('f_MTBF'[MesRef]))
+			VAR _pct = DIVIDE(_valor, _max, 0)
+			VAR _r = IF(_pct <= 0.5, 255, INT(255 - (255 - 237) * (_pct - 0.5) * 2))
+			VAR _g = IF(_pct <= 0.5, INT(255 - (255 - 202) * _pct * 2), INT(202 - (202 - 28) * (_pct - 0.5) * 2))
+			VAR _b = IF(_pct <= 0.5, INT(255 - (255 - 202) * _pct * 2), INT(202 - (202 - 36) * (_pct - 0.5) * 2))
+			VAR _rHex = IF(_r < 16, "0" & FORMAT(_r, "X"), FORMAT(_r, "X"))
+			VAR _gHex = IF(_g < 16, "0" & FORMAT(_g, "X"), FORMAT(_g, "X"))
+			VAR _bHex = IF(_b < 16, "0" & FORMAT(_b, "X"), FORMAT(_b, "X"))
+			RETURN "#" & _rHex & _gHex & _bHex
+		displayFolder: Heatmap
+		lineageTag: med-cor-heatmap-quebras-007
+
+	column Nome
+		dataType: string
+		lineageTag: 27a35ec9-ea0a-44fa-9ebf-6164e7ed51b5
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows({}, type table [Nome = text])
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

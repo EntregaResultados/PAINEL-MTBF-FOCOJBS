@@ -1,0 +1,255 @@
+table f_MTBF
+	lineageTag: mtbf-fact-table-001
+
+	column OS
+		dataType: int64
+		formatString: 0
+		lineageTag: f-mtbf-col-os-001
+		summarizeBy: sum
+		sourceColumn: MaintenanceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Peca
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-peca-002
+		summarizeBy: none
+		sourceColumn: PartName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Placa
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-placa-003
+		summarizeBy: none
+		sourceColumn: LicensePlate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data_Inicio
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: f-mtbf-col-dtini-004
+		summarizeBy: none
+		sourceColumn: ServiceStartTimestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data_Encerramento
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: f-mtbf-col-dtenc-005
+		summarizeBy: none
+		sourceColumn: ServiceCompletionTimestamp
+
+		variation Variation
+			isDefault
+			relationship: a539f990-cf7c-40cc-a876-7717a7842e25
+			defaultHierarchy: LocalDateTable_0b189704-ddee-4b47-ba43-278e0b51a268.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column UF
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-uf-006
+		summarizeBy: none
+		sourceColumn: StateName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Operações
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-info1-007
+		summarizeBy: none
+		sourceColumn: AdditionalInformation1Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column KM
+		dataType: int64
+		formatString: 0
+		lineageTag: f-mtbf-col-km-008
+		summarizeBy: sum
+		sourceColumn: MileageNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo_Pecas
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-grppeca-009
+		summarizeBy: none
+		sourceColumn: PartGroupName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Familia
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-familia-010
+		summarizeBy: none
+		sourceColumn: VehicleFamilyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo_Cliente
+		dataType: int64
+		formatString: 0
+		lineageTag: f-mtbf-col-codcli-011
+		summarizeBy: sum
+		sourceColumn: CustomerSourceCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Cliente
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-nomecli-012
+		summarizeBy: none
+		sourceColumn: CustomerShortName
+
+		annotation SummarizationSetBy = Automatic
+
+	column VA_Aprovado_Peca
+		dataType: double
+		sourceProviderType: double
+		lineageTag: f-mtbf-col-vaaprov-013
+		summarizeBy: sum
+		sourceColumn: PriceApproved
+
+		annotation SummarizationSetBy = Automatic
+
+	column Idade_Placa
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: f-mtbf-col-idade-014
+		summarizeBy: sum
+		sourceColumn: StartYearOfManufacture
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fabricante_Veiculo
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-fabvei-015
+		summarizeBy: none
+		sourceColumn: VehicleManufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo_Manutencao
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-tipoman-016
+		summarizeBy: none
+		sourceColumn: MaintenanceType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Servico
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-status-017
+		summarizeBy: none
+		sourceColumn: StatusTypeDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column Info_Adicional_3
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: f-mtbf-col-info3-019
+		summarizeBy: none
+		sourceColumn: AdditionalInformation3Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column MesRef = DATE(YEAR('f_MTBF'[Data_Inicio]), MONTH('f_MTBF'[Data_Inicio]), 1)
+		dataType: dateTime
+		formatString: mmm/yy
+		lineageTag: f-mtbf-col-mesref-018
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_MTBF = m
+		mode: import
+		source =
+				let
+				    // Conexão com Databricks - mesmo padrão de agg_dailyamericasvehiclestatuschanges
+				    Fonte = Databricks.Catalogs("adb-7941093640821140.0.azuredatabricks.net", "/sql/1.0/warehouses/ce56ec5f5d0a3e07", [Catalog = "", Database = ""]),
+				    hive_metastore_Database = Fonte{[Name="hive_metastore",Kind="Database"]}[Data],
+				    gold_Schema = hive_metastore_Database{[Name="gold",Kind="Schema"]}[Data],
+				
+				    // Carrega tabelas individuais
+				    fi = gold_Schema{[Name="fact_maintenanceitems",Kind="Table"]}[Data],
+				    fs = gold_Schema{[Name="fact_maintenanceservices",Kind="Table"]}[Data],
+				    dv = gold_Schema{[Name="dim_maintenancevehicles",Kind="Table"]}[Data],
+				    dm = gold_Schema{[Name="dim_maintenancemerchants",Kind="Table"]}[Data],
+				    dp = gold_Schema{[Name="dim_maintenanceparts",Kind="Table"]}[Data],
+				    dc = gold_Schema{[Name="dim_fuelcustomers",Kind="Table"]}[Data],
+				    dt = gold_Schema{[Name="dim_maintenancetypes",Kind="Table"]}[Data],
+				    ds = gold_Schema{[Name="dim_maintenanceserviceorderstatustypes",Kind="Table"]}[Data],
+				
+				    // ============================================================
+				    // ESTRATÉGIA: Começar por fact_maintenanceservices (menor),
+				    // aplicar filtros pesados PRIMEIRO, depois JOIN com items.
+				    // Validado 2026-02-14: reduz de 4M para ~448K linhas.
+				    // ============================================================
+				
+				    // PASSO 1: Filtra fact_maintenanceservices — últimos 12 meses + KM válido
+				    fs_filtrado = Table.SelectRows(fs, each
+				        [ServiceStartTimestamp] >= Date.AddYears(DateTime.LocalNow(), -1)
+				        and [MileageNumber] <> null
+				        and [MileageNumber] >= 100
+				        and [MileageNumber] <= 900000),
+				
+				    // PASSO 2: JOIN com dim_maintenancevehicles para obter Regional
+				    join_dv = Table.NestedJoin(fs_filtrado, {"Sk_MaintenanceVehicle"}, dv, {"Sk_MaintenanceVehicle"}, "dv_joined", JoinKind.Inner),
+				    exp_dv = Table.ExpandTableColumn(join_dv, "dv_joined", {"LicensePlate", "AdditionalInformation1Description", "AdditionalInformation3Description", "VehicleFamilyName", "StartYearOfManufacture", "VehicleManufacturer"}),
+				
+				    // PASSO 3: Filtra SOMENTE regionais JBS (lista exata, §6 Manager)
+				    // Antes usava Text.StartsWith("REGIONAL") que trazia 36 variações
+				    filtroRegional = Table.SelectRows(exp_dv, each
+				        List.Contains({"REGIONAL 1","REGIONAL 2","REGIONAL 3","REGIONAL 4","REGIONAL 5","REGIONAL 6","REGIONAL 7","REGIONAL 8"}, [AdditionalInformation3Description])),
+				
+				    // PASSO 4: JOIN com fact_maintenanceitems (peças) — agora sobre ~139K OS
+				    // Resultado: ~448K linhas (média 3.21 peças por OS)
+				    join_fi = Table.NestedJoin(filtroRegional, {"Sk_MaintenanceServices"}, fi, {"Sk_MaintenanceServices"}, "fi_joined", JoinKind.Inner),
+				    exp_fi = Table.ExpandTableColumn(join_fi, "fi_joined", {"MaintenanceId", "Sk_MaintenancePart", "PriceApproved"}),
+				
+				    // PASSO 5: JOIN com dim_maintenancemerchants (UF)
+				    join_dm = Table.NestedJoin(exp_fi, {"Sk_MaintenanceMerchant"}, dm, {"Sk_MaintenanceMerchant"}, "dm_joined", JoinKind.LeftOuter),
+				    exp_dm = Table.ExpandTableColumn(join_dm, "dm_joined", {"StateName"}),
+				
+				    // PASSO 6: JOIN com dim_maintenanceparts (Peça e Grupo)
+				    join_dp = Table.NestedJoin(exp_dm, {"Sk_MaintenancePart"}, dp, {"Sk_MaintenancePart"}, "dp_joined", JoinKind.LeftOuter),
+				    exp_dp = Table.ExpandTableColumn(join_dp, "dp_joined", {"PartName", "PartGroupName"}),
+				
+				    // PASSO 7: JOIN com dim_fuelcustomers (Cliente)
+				    join_dc = Table.NestedJoin(exp_dp, {"Sk_FuelCustomer"}, dc, {"Sk_FuelCustomer"}, "dc_joined", JoinKind.LeftOuter),
+				    exp_dc = Table.ExpandTableColumn(join_dc, "dc_joined", {"CustomerSourceCode", "CustomerShortName"}),
+				
+				    // PASSO 8: JOIN com dim_maintenancetypes (Tipo Manutenção)
+				    join_dt = Table.NestedJoin(exp_dc, {"Sk_MaintenanceType"}, dt, {"Sk_MaintenanceType"}, "dt_joined", JoinKind.LeftOuter),
+				    exp_dt = Table.ExpandTableColumn(join_dt, "dt_joined", {"MaintenanceType"}),
+				
+				    // PASSO 9: JOIN com dim_maintenanceserviceorderstatustypes (Status)
+				    join_ds = Table.NestedJoin(exp_dt, {"Sk_ServiceOrderStatusType"}, ds, {"Sk_ServiceOrderStatusType"}, "ds_joined", JoinKind.LeftOuter),
+				    exp_ds = Table.ExpandTableColumn(join_ds, "ds_joined", {"StatusTypeDescription"}),
+				
+				    // PASSO 10: Seleciona colunas finais (mesmas colunas que antes)
+				    resultado = Table.SelectColumns(exp_ds, {"MaintenanceId", "PartName", "LicensePlate", "ServiceStartTimestamp", "ServiceCompletionTimestamp", "StateName", "AdditionalInformation1Description", "AdditionalInformation3Description", "MileageNumber", "PartGroupName", "VehicleFamilyName", "CustomerSourceCode", "CustomerShortName", "PriceApproved", "StartYearOfManufacture", "VehicleManufacturer", "MaintenanceType", "StatusTypeDescription"}),
+				
+				    // PASSO 11: Limita a 1 milhão de linhas (segurança)
+				    limitado = Table.FirstN(resultado, 1000000)
+				in
+				    limitado
+
+	annotation PBI_ResultType = Table
+

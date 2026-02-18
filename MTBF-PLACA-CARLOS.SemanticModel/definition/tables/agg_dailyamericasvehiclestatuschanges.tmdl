@@ -1,0 +1,87 @@
+table agg_dailyamericasvehiclestatuschanges
+	lineageTag: a0748598-9548-438c-b9fd-eada38ad5444
+
+	column Sk_DailyAmericasVehicleStatusChange
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 24bcc42f-22dd-4501-a3a6-196be8e86490
+		summarizeBy: sum
+		sourceColumn: Sk_DailyAmericasVehicleStatusChange
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReferenceDate
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 39cc14be-3a37-461a-a2cd-b002a4025050
+		summarizeBy: none
+		sourceColumn: ReferenceDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ClientId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 7b01a5ff-aa73-4290-8759-e02f4198dad3
+		summarizeBy: count
+		sourceColumn: ClientId
+
+		annotation SummarizationSetBy = Automatic
+
+	column VehicleId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 7b3893ce-2275-4a88-8a27-cd94b6e0d801
+		summarizeBy: count
+		sourceColumn: VehicleId
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 9bcb7356-8343-4e90-bd3c-b24fb65109b7
+		summarizeBy: count
+		sourceColumn: RegionId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyId
+		dataType: string
+		sourceProviderType: nvarchar(65535)
+		lineageTag: a65184cb-5948-4564-9670-c58ced62c872
+		summarizeBy: none
+		sourceColumn: FamilyId
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLastDate
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		sourceProviderType: bit
+		lineageTag: a96c3cee-c45a-4abf-aa83-49c17ce3832c
+		summarizeBy: none
+		sourceColumn: IsLastDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition agg_dailyamericasvehiclestatuschanges = m
+		mode: directQuery
+		source =
+				let
+				    Fonte = Databricks.Catalogs("adb-7941093640821140.0.azuredatabricks.net", "/sql/1.0/warehouses/ce56ec5f5d0a3e07", [Catalog = "", Database = ""]),
+				    hive_metastore_Database = Fonte{[Name="hive_metastore",Kind="Database"]}[Data],
+				    gold_Schema = hive_metastore_Database{[Name="gold",Kind="Schema"]}[Data],
+				    agg_dailyamericasvehiclestatuschanges_Table = gold_Schema{[Name="agg_dailyamericasvehiclestatuschanges",Kind="Table"]}[Data]
+				in
+				    agg_dailyamericasvehiclestatuschanges_Table
+
+	annotation PBI_ResultType = Table
+

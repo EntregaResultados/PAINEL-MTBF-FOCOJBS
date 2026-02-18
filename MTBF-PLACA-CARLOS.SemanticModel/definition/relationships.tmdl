@@ -1,0 +1,9 @@
+relationship Relationship1
+	fromColumn: f_MTBF.Data_Inicio
+	toColumn: d_Calendario.Date
+
+relationship a539f990-cf7c-40cc-a876-7717a7842e25
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_MTBF.Data_Encerramento
+	toColumn: LocalDateTable_0b189704-ddee-4b47-ba43-278e0b51a268.Date
+

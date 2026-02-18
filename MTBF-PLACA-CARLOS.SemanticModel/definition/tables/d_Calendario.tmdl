@@ -1,0 +1,55 @@
+table d_Calendario
+	lineageTag: calendar-dim-001
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: a87ae0c7-10de-46fe-a76a-867eddce828c
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano = YEAR([Date])
+		dataType: int64
+		formatString: 0
+		lineageTag: 81ae2f35-6093-4ccf-abb8-36b095d28029
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column Mes = MONTH([Date])
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ae2c406-48fa-4cd0-b8ed-3ff61fa09d40
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'Mês Nome' = FORMAT([Date], "MMMM")
+		dataType: string
+		lineageTag: 5e3f111b-4913-4e9d-8e3d-f0930a48a142
+		summarizeBy: none
+
+	column 'Ano Mês' = FORMAT([Date], "YYYY-MM")
+		dataType: string
+		lineageTag: 98e8f777-3878-4d9e-b0bf-370a1183df7c
+		summarizeBy: none
+		sortByColumn: 'Ano Mês Class'
+
+	column 'Ano Mês Class' = YEAR([Date]) * 100 + MONTH([Date])
+		dataType: int64
+		formatString: 0
+		lineageTag: 51f4265d-51ff-424c-912c-f02ea62c8389
+		summarizeBy: none
+
+	partition d_Calendario = calculated
+		mode: import
+		source = CALENDARAUTO()
+
+	annotation PBI_Id = 7be1a80d463d4f4086d4948a39a0ef6e
+
