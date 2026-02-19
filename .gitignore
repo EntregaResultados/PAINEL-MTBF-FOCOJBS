@@ -17,8 +17,8 @@ databricks.yml
 # Queries exploratórias (scripts de diagnóstico e validação local)
 _exploratory_queries/
 
-# Power BI local settings (específico de máquina)
-.pbi/localSettings.json
+# Power BI local settings e cache (específico de máquina)
+**/.pbi/
 
 # VS Code settings (específico de máquina)
 .vscode/
