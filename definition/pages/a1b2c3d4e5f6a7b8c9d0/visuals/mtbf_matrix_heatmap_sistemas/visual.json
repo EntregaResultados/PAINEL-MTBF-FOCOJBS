@@ -5,7 +5,7 @@
     "x": 660,
     "y": 100,
     "z": 3000,
-    "height": 590,
+    "height": 340,
     "width": 600,
     "tabOrder": 7000
   },
@@ -18,7 +18,11 @@
             {
               "field": {
                 "Column": {
-                  "Expression": { "SourceRef": { "Entity": "f_MTBF" } },
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "f_MTBF"
+                    }
+                  },
                   "Property": "MesRef"
                 }
               },
@@ -33,7 +37,11 @@
             {
               "field": {
                 "Column": {
-                  "Expression": { "SourceRef": { "Entity": "f_MTBF" } },
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "f_MTBF"
+                    }
+                  },
                   "Property": "Grupo_Pecas"
                 }
               },
@@ -48,7 +56,11 @@
             {
               "field": {
                 "Measure": {
-                  "Expression": { "SourceRef": { "Entity": "_Medidas" } },
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
                   "Property": "Total Quebras"
                 }
               },
@@ -63,101 +75,437 @@
       "legend": [
         {
           "properties": {
-            "show": { "expr": { "Literal": { "Value": "true" } } },
-            "position": { "expr": { "Literal": { "Value": "'Right'" } } },
-            "labelColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#2D2D3A'" } } } } },
-            "fontSize": { "expr": { "Literal": { "Value": "8D" } } },
-            "fontFamily": { "expr": { "Literal": { "Value": "'Segoe UI'" } } }
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Right'"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2D2D3A'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Calibri'"
+                }
+              }
+            }
           }
         }
       ],
       "categoryAxis": [
         {
           "properties": {
-            "show": { "expr": { "Literal": { "Value": "true" } } },
-            "labelColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#7A7A8E'" } } } } },
-            "fontSize": { "expr": { "Literal": { "Value": "8D" } } },
-            "showAxisTitle": { "expr": { "Literal": { "Value": "false" } } }
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7A7A8E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ],
       "valueAxis": [
         {
           "properties": {
-            "show": { "expr": { "Literal": { "Value": "true" } } },
-            "labelColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#7A7A8E'" } } } } },
-            "fontSize": { "expr": { "Literal": { "Value": "8D" } } },
-            "showAxisTitle": { "expr": { "Literal": { "Value": "false" } } },
-            "gridlineShow": { "expr": { "Literal": { "Value": "true" } } },
-            "gridlineColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#E8E8EE'" } } } } }
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7A7A8E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "gridlineShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E8E8EE'"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       ],
       "labels": [
         {
           "properties": {
-            "show": { "expr": { "Literal": { "Value": "false" } } }
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]
     },
     "visualContainerObjects": {
-      "title": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "true" } } },
-          "text": { "expr": { "Literal": { "Value": "'Quebras por Sistema · Composição Mensal'" } } },
-          "fontColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#1A1A2E'" } } } } },
-          "fontSize": { "expr": { "Literal": { "Value": "14D" } } },
-          "fontFamily": { "expr": { "Literal": { "Value": "'Segoe UI Semibold'" } } },
-          "bold": { "expr": { "Literal": { "Value": "true" } } },
-          "alignment": { "expr": { "Literal": { "Value": "'left'" } } }
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Quebras por Sistema · Composição Mensal'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1A1A2E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Calibri'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            }
+          }
         }
-      }],
-      "subTitle": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "true" } } },
-          "text": { "expr": { "Literal": { "Value": "'Total Quebras empilhadas por Grupo de Peças'" } } },
-          "fontColor": { "solid": { "color": { "expr": { "Literal": { "Value": "'#7A7A8E'" } } } } },
-          "fontSize": { "expr": { "Literal": { "Value": "10D" } } },
-          "fontFamily": { "expr": { "Literal": { "Value": "'Segoe UI'" } } }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Quebras empilhadas por Grupo de Peças'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7A7A8E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Calibri'"
+                }
+              }
+            }
+          }
         }
-      }],
-      "background": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "true" } } },
-          "color": { "solid": { "color": { "expr": { "Literal": { "Value": "'#FFFFFF'" } } } } },
-          "transparency": { "expr": { "Literal": { "Value": "0D" } } }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
         }
-      }],
-      "border": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "true" } } },
-          "color": { "solid": { "color": { "expr": { "Literal": { "Value": "'#F0F0F0'" } } } } },
-          "radius": { "expr": { "Literal": { "Value": "16D" } } },
-          "width": { "expr": { "Literal": { "Value": "1D" } } }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F0F0F0'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
         }
-      }],
-      "dropShadow": [{
-        "properties": {
-          "show": { "expr": { "Literal": { "Value": "true" } } },
-          "preset": { "expr": { "Literal": { "Value": "'Custom'" } } },
-          "position": { "expr": { "Literal": { "Value": "'Outer'" } } },
-          "color": { "solid": { "color": { "expr": { "Literal": { "Value": "'#B3B3B3'" } } } } },
-          "transparency": { "expr": { "Literal": { "Value": "50D" } } },
-          "shadowBlur": { "expr": { "Literal": { "Value": "12D" } } },
-          "shadowSpread": { "expr": { "Literal": { "Value": "0D" } } },
-          "shadowDistance": { "expr": { "Literal": { "Value": "4D" } } },
-          "angle": { "expr": { "Literal": { "Value": "90D" } } }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Custom'"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outer'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B3B3B3'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "50D"
+                }
+              }
+            },
+            "shadowBlur": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "shadowSpread": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "shadowDistance": {
+              "expr": {
+                "Literal": {
+                  "Value": "4D"
+                }
+              }
+            },
+            "angle": {
+              "expr": {
+                "Literal": {
+                  "Value": "90D"
+                }
+              }
+            }
+          }
         }
-      }],
-      "padding": [{
-        "properties": {
-          "top": { "expr": { "Literal": { "Value": "8D" } } },
-          "bottom": { "expr": { "Literal": { "Value": "8D" } } },
-          "left": { "expr": { "Literal": { "Value": "12D" } } },
-          "right": { "expr": { "Literal": { "Value": "12D" } } }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
         }
-      }]
+      ]
     },
     "drillFilterOtherVisuals": true
   }

@@ -5,7 +5,7 @@
     "x": 24,
     "y": 110,
     "z": 2000,
-    "height": 580,
+    "height": 340,
     "width": 620,
     "tabOrder": 5000
   },
@@ -183,13 +183,6 @@
                 }
               }
             },
-            "axisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Total Km Por Parada'"
-                }
-              }
-            },
             "gridlineShow": {
               "expr": {
                 "Literal": {
@@ -284,7 +277,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI Semibold'"
+                  "Value": "'Calibri'"
                 }
               }
             },
@@ -343,7 +336,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI'"
+                  "Value": "'Calibri'"
                 }
               }
             }
