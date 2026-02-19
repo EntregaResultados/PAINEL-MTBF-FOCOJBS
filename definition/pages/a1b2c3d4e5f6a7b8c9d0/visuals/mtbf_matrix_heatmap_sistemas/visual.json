@@ -1,12 +1,12 @@
-{
+﻿{
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "mtbf_stacked_bar_sistemas",
   "position": {
-    "x": 660,
-    "y": 100,
+    "x": 659.53263051050783,
+    "y": 109.60714203326491,
     "z": 3000,
-    "height": 340,
-    "width": 600,
+    "height": 340.16009596530489,
+    "width": 600.94950287203858,
     "tabOrder": 7000
   },
   "visual": {
@@ -239,7 +239,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Quebras por Sistema · Composição Mensal'"
+                  "Value": "'Quebras por Sistema ┬À Composi├º├úo Mensal'"
                 }
               }
             },
@@ -298,7 +298,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Total Quebras empilhadas por Grupo de Peças'"
+                  "Value": "'Total Quebras empilhadas por Grupo de Pe├ºas'"
                 }
               }
             },
@@ -508,5 +508,51 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ce298f77040741a4fa41",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "f_MTBF"
+              }
+            },
+            "Property": "MesRef"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "882f78e89156fe8fd4f4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "f_MTBF"
+              }
+            },
+            "Property": "Grupo_Pecas"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0844d67144ae12fed179",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Total Quebras"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
