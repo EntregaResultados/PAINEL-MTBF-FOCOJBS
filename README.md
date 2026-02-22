@@ -19,6 +19,10 @@ flowchart TB
         DS["dim_maintenance\nserviceorderstatustypes"]
     end
 
+    subgraph EXCEL["📄 Excel - KM Rodados GEF"]
+        XL["4 - KM Rodado_Geral 1.xlsx\n~232K transações abastecimento"]
+    end
+
     subgraph ETL["⚙️ Power Query M - Transformação"]
         F1["Filtro Temporal\núltimos 12 meses"]
         F2["Filtro KM Válido\n100 ≤ KM ≤ 900.000"]
@@ -28,7 +32,8 @@ flowchart TB
     end
 
     subgraph PBI["📊 Power BI - Modelo Semântico"]
-        FATO["f_MTBF\nTabela Fato"]
+        FATO["f_MTBF\nTabela Fato (Falhas)"]
+        FKML["f_KM_Rodados\nTabela KM (Rodagem)"]
         MED["_Medidas\nMedidas DAX"]
     end
 
@@ -47,11 +52,14 @@ flowchart TB
     DT --> JN
     DS --> JN
     JN --> LM --> FATO
+    XL --> FKML
     FATO --> MED
+    FKML --> MED
     MED --> P1
     MED --> P2
 
     style DATABRICKS fill:#1A1A2E,color:#FFF
+    style EXCEL fill:#0D6F3B,color:#FFF
     style ETL fill:#2D2D3A,color:#FFF
     style PBI fill:#ED1C24,color:#FFF
     style DASH fill:#0D6F3B,color:#FFF
@@ -68,6 +76,26 @@ flowchart TB
 | `fact_maintenanceservices` | `hive_metastore.gold` | Ordens de serviço de manutenção | `Sk_MaintenanceServices` (PK) |
 | `fact_maintenanceitems`    | `hive_metastore.gold` | Itens/peças de cada OS          | `Sk_MaintenanceServices` (FK) |
 
+### Tabela KM Rodados (Origem Excel — provisório)
+
+| Tabela         | Origem                       | Descrição                                | Volume       |
+| -------------- | ---------------------------- | ---------------------------------------- | ------------ |
+| `f_KM_Rodados` | `4 - KM Rodado_Geral 1.xlsx` | Transações de abastecimento (GEF) com KM | ~232K linhas |
+
+> **Nota**: A tabela correta no Databricks é `fact_transactionfuel` (colunas `KilometersDriven`, `Mileage`, `PreviousMileage`), mas o pipeline ETL não carrega transações JBS nesta tabela. O Excel é usado provisoriamente até correção do pipeline.
+
+#### Colunas `f_KM_Rodados`
+
+| Coluna            | Tipo    | Descrição                       |
+| ----------------- | ------- | ------------------------------- |
+| `Placa`           | Texto   | Placa do veículo                |
+| `KM Rodados`      | Inteiro | KM rodados entre abastecimentos |
+| `Familia Veiculo` | Texto   | Família do veículo              |
+| `Mes`             | Inteiro | Mês da transação                |
+| `Ano`             | Inteiro | Ano da transação                |
+| `Data`            | Data    | Data da transação               |
+| `Nome Reduzido`   | Texto   | Nome reduzido do cliente        |
+
 ### Tabelas Dimensão (Origem Databricks)
 
 | Tabela                                   | Schema                | Descrição                                     | Chave SK                    |
@@ -79,25 +107,25 @@ flowchart TB
 | `dim_maintenancetypes`                   | `hive_metastore.gold` | Tipos de manutenção (Corretiva/Preventiva)    | `Sk_MaintenanceType`        |
 | `dim_maintenanceserviceorderstatustypes` | `hive_metastore.gold` | Status da OS (Cobradas, Aprovadas, etc.)      | `Sk_ServiceOrderStatusType` |
 
-### Tabela Resultado no Power BI
+### Tabela f_MTBF (Resultado no Power BI)
 
-| Coluna               | Tipo             | Origem (sourceColumn)                            |
-| -------------------- | ---------------- | ------------------------------------------------ |
-| `OS`                 | Inteiro          | `MaintenanceId`                                  |
-| `Placa`              | Texto            | `LicensePlate`                                   |
-| `Peca`               | Texto            | `PartName`                                       |
-| `Grupo_Pecas`        | Texto            | `PartGroupName`                                  |
-| `Data_Inicio`        | Data             | `ServiceStartTimestamp`                          |
-| `Data_Encerramento`  | Data             | `ServiceCompletionTimestamp`                     |
-| `KM`                 | Inteiro          | `MileageNumber`                                  |
-| `UF`                 | Texto            | `StateName`                                      |
-| `Operações`          | Texto            | `AdditionalInformation1Description`              |
-| `Familia`            | Texto            | `VehicleFamilyName`                              |
-| `Fabricante_Veiculo` | Texto            | `VehicleManufacturer`                            |
-| `Tipo_Manutencao`    | Texto            | `MaintenanceType`                                |
-| `Status_Servico`     | Texto            | `StatusTypeDescription`                          |
-| `VA_Aprovado_Peca`   | Decimal          | `PriceApproved`                                  |
-| `MesRef`             | Data (calculada) | `DATE(YEAR(Data_Inicio), MONTH(Data_Inicio), 1)` |
+| Coluna               | Tipo             | Origem (sourceColumn)                                    |
+| -------------------- | ---------------- | -------------------------------------------------------- |
+| `OS`                 | Inteiro          | `MaintenanceId`                                          |
+| `Placa`              | Texto            | `LicensePlate`                                           |
+| `Peca`               | Texto            | `PartName`                                               |
+| `Grupo_Pecas`        | Texto            | `PartGroupName`                                          |
+| `Data_Inicio`        | Data             | `ServiceStartTimestamp`                                  |
+| `Data_Encerramento`  | Data             | `ServiceCompletionTimestamp`                             |
+| `KM`                 | Inteiro          | `MileageNumber` (odômetro OS — usado apenas para falhas) |
+| `UF`                 | Texto            | `StateName`                                              |
+| `Operações`          | Texto            | `AdditionalInformation1Description`                      |
+| `Familia`            | Texto            | `VehicleFamilyName`                                      |
+| `Fabricante_Veiculo` | Texto            | `VehicleManufacturer`                                    |
+| `Tipo_Manutencao`    | Texto            | `MaintenanceType`                                        |
+| `Status_Servico`     | Texto            | `StatusTypeDescription`                                  |
+| `VA_Aprovado_Peca`   | Decimal          | `PriceApproved`                                          |
+| `MesRef`             | Data (calculada) | `DATE(YEAR(Data_Inicio), MONTH(Data_Inicio), 1)`         |
 
 ---
 
@@ -145,41 +173,49 @@ flowchart LR
 
 ```mermaid
 flowchart TD
+    subgraph FONTES["📦 Fontes de Dados"]
+        FKML["f_KM_Rodados\nExcel GEF\n~232K transações"]
+        FMTBF["f_MTBF\nDatabricks\nOS de manutenção"]
+    end
+
     subgraph FILTROS["🔒 Filtros de Negócio"]
         FC["Tipo_Manutencao = 'Corretiva'"]
         FS2["Status ∈ Cobradas, Concluídas,\nAprovadas, Aprov. Parcialmente"]
         FG["Grupo_Pecas ∉ Funilaria, Acessórios"]
-        FK["100 ≤ KM ≤ 900.000"]
     end
 
     subgraph MEDIDAS["📊 Medidas"]
-        DIST["Distância Total KM\nSUMX por Placa\nMax(KM) - Min(KM)"]
+        DIST["Distância Total KM\nSUM(f_KM_Rodados[KM Rodados])"]
         FALHAS["Qtd Falhas\nCOUNTROWS distintos\nPlaca + Data_Inicio"]
         MTBF["MTBF (KM)\nDIVIDE(Distância, Falhas)"]
         VEIC["Total Veículos\nDISTINCTCOUNT(Placa)"]
     end
 
+    FKML --> DIST
+    FMTBF --> FALHAS
     FC --> FALHAS
     FS2 --> FALHAS
     FG --> FALHAS
-    FK --> DIST
     DIST --> MTBF
     FALHAS --> MTBF
 
+    style FONTES fill:#0D6F3B,color:#FFF
     style FILTROS fill:#2D2D3A,color:#FFF
     style MEDIDAS fill:#ED1C24,color:#FFF
 ```
 
 ### Detalhamento das Medidas
 
-| Medida                 | Fórmula                                                 | Formato    | Descrição                                       |
-| ---------------------- | ------------------------------------------------------- | ---------- | ----------------------------------------------- |
-| **Distância Total KM** | `SUMX(VALUES(Placa), MAX(KM) - MIN(KM))`                | `#,##0 KM` | Variação de odômetro por placa, filtro outliers |
-| **Qtd Falhas**         | `COUNTROWS(SUMMARIZE(FILTER(...), Placa, Data_Inicio))` | `#,##0`    | Eventos distintos de parada (Placa + Data)      |
-| **MTBF (KM)**          | `DIVIDE(Distância Total, Qtd Falhas)`                   | `#,##0 KM` | Quilometragem média entre falhas                |
-| **Total Quebras**      | `[Qtd Falhas]`                                          | `#,##0`    | Alias para visualizações de quebras             |
-| **Rodagem Mensal KM**  | `[Distância Total KM]`                                  | `#,##0 KM` | Alias para gráficos de rodagem                  |
-| **Total Veículos**     | `DISTINCTCOUNT(Placa)`                                  | `#,##0`    | Contagem de placas distintas no contexto        |
+| Medida                 | Fórmula                                                          | Fonte          | Descrição                                  |
+| ---------------------- | ---------------------------------------------------------------- | -------------- | ------------------------------------------ |
+| **Distância Total KM** | `CALCULATE(SUM(f_KM_Rodados[KM Rodados]), USERELATIONSHIP(...))` | `f_KM_Rodados` | Soma de KM rodados entre abastecimentos    |
+| **Qtd Falhas**         | `COUNTROWS(SUMMARIZE(FILTER(...), Placa, Data_Inicio))`          | `f_MTBF`       | Eventos distintos de parada (Placa + Data) |
+| **MTBF (KM)**          | `DIVIDE(Distância Total, Qtd Falhas)`                            | Ambas          | Quilometragem média entre falhas           |
+| **Total Quebras**      | `[Qtd Falhas]`                                                   | `f_MTBF`       | Alias para visualizações de quebras        |
+| **Rodagem Mensal KM**  | `[Distância Total KM]`                                           | `f_KM_Rodados` | Alias para gráficos de rodagem             |
+| **Total Veículos**     | `DISTINCTCOUNT(Placa)`                                           | `f_MTBF`       | Contagem de placas distintas               |
+
+> **Correção 2026-02-22**: A medida `Distância Total KM` foi alterada de `SUMX(VALUES(Placa), MAX(KM) - MIN(KM))` (odômetro de manutenção, impreciso) para `SUM(f_KM_Rodados[KM Rodados])` (KM reais de abastecimento GEF). Validado contra Excel de referência: ~12-14M KM/mês, 2.124 placas.
 
 ---
 
@@ -264,13 +300,17 @@ MTBF-PLACA-CARLOS.Report/          ← Relatório Power BI
 │   │   ├── fd9f95bb.../           ← Página 1 (Visão Geral)
 │   │   └── a1b2c3d4.../          ← Página 2 (Análise JBS-PT2)
 │   └── report.json
+├── 4 - KM Rodado_Geral 1.xlsx    ← Excel de KM Rodados (fonte provisória)
 └── MTBF-PLACA-CARLOS(FOCO-JBS).pbix
 
 MTBF-PLACA-CARLOS.SemanticModel/   ← Modelo Semântico
 ├── definition/
-│   └── tables/
-│       ├── f_MTBF.tmdl            ← Tabela fato + Power Query
-│       └── _Medidas.tmdl          ← Medidas DAX
+│   ├── tables/
+│   │   ├── f_MTBF.tmdl            ← Tabela fato OS (Databricks)
+│   │   ├── f_KM_Rodados.tmdl      ← Tabela KM rodados (Excel GEF)
+│   │   ├── _Medidas.tmdl          ← Medidas DAX
+│   │   └── d_Calendario.tmdl      ← Calendário
+│   └── relationships.tmdl         ← Relacionamentos
 └── .platform
 ```
 

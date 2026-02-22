@@ -2,28 +2,14 @@ table _Medidas
 	lineageTag: measures-table-001
 
 	/// Distância total percorrida pela frota.
-	/// Calcula a variação de odômetro (Max KM - Min KM) para cada placa
-	/// e soma o resultado de todas as placas no contexto de filtro.
-	/// Filtra outliers: ignora KM <= 0 e KM > 900000 (dados inválidos).
-	/// Ref: Manager §1.2 + Validação Databricks 2026-02-14
+	/// Usa dados de KM Rodados GEF (abastecimento) da tabela f_KM_Rodados.
+	/// Fonte: Excel de referência validado contra transações reais de combustível.
+	/// USERELATIONSHIP ativa o filtro de data do d_Calendario sobre f_KM_Rodados.
+	/// Alterado em 2026-02-22: substituído MAX-MIN odômetro manutenção por soma GEF.
 	measure 'Distancia Total KM' =
-			SUMX(
-			    VALUES('f_MTBF'[Placa]),
-			    VAR MaxKM = CALCULATE(
-			        MAX('f_MTBF'[KM]),
-			        'f_MTBF'[KM] >= 100,
-			        'f_MTBF'[KM] <= 900000
-			    )
-			    VAR MinKM = CALCULATE(
-			        MIN('f_MTBF'[KM]),
-			        'f_MTBF'[KM] >= 100,
-			        'f_MTBF'[KM] <= 900000
-			    )
-			    RETURN IF(
-			        NOT ISBLANK(MaxKM) && NOT ISBLANK(MinKM),
-			        MaxKM - MinKM,
-			        BLANK()
-			    )
+			CALCULATE(
+			    SUM('f_KM_Rodados'[KM Rodados]),
+			    USERELATIONSHIP('f_KM_Rodados'[Data], 'd_Calendario'[Date])
 			)
 		formatString: #,##0 "KM"
 		displayFolder: KPIs MTBF
