@@ -261,7 +261,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'KM Acumulado da Frota ┬À Evolu├º├úo Mensal'"
+                  "Value": "'KM Acumulado da Frota - Evolução Mensal'"
                 }
               }
             },
@@ -320,7 +320,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dist├óncia total percorrida pela frota JBS ┬À ├Ültimos 12 meses'"
+                  "Value": "'Distância total percorrida pela frota JBS - Últimos 12 meses'"
                 }
               }
             },

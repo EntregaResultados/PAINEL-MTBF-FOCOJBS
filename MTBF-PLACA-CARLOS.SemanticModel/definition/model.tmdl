@@ -8,13 +8,14 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["agg_dailyamericasvehiclestatuschanges","f_MTBF","_Medidas"]
+annotation PBI_QueryOrder = ["agg_dailyamericasvehiclestatuschanges","f_MTBF","_Medidas","f_KM_Rodados"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table agg_dailyamericasvehiclestatuschanges
 ref table f_MTBF
 ref table _Medidas
+ref table f_KM_Rodados
 ref table d_Calendario
 ref table DateTableTemplate_e6f963a9-fbe8-48a3-befd-5b4bd50fec15
 ref table LocalDateTable_0b189704-ddee-4b47-ba43-278e0b51a268

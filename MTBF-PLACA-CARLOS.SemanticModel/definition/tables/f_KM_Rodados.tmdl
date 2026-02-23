@@ -1,0 +1,92 @@
+/// Tabela de KM Rodados GEF (abastecimento).
+/// Fonte: Excel "4 -  KM Rodado_Geral 1.xlsx" com dados de transações de combustível JBS.
+/// Esta tabela substitui o cálculo MAX-MIN do odômetro de manutenção para a medida
+/// "Distancia Total KM", trazendo dados reais de KM rodados entre abastecimentos.
+table f_KM_Rodados
+	lineageTag: f-km-rodados-table-001
+
+	column Placa
+		dataType: string
+		sourceProviderType: nvarchar(255)
+		lineageTag: f-km-rod-col-placa-001
+		summarizeBy: none
+		sourceColumn: Placa
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KM Rodados'
+		dataType: int64
+		formatString: #,##0
+		lineageTag: f-km-rod-col-km-rodados-002
+		summarizeBy: sum
+		sourceColumn: KM Rodados GEF
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Familia Veiculo'
+		dataType: string
+		sourceProviderType: nvarchar(255)
+		lineageTag: f-km-rod-col-familia-003
+		summarizeBy: none
+		sourceColumn: Família do Veículo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		dataType: int64
+		formatString: 0
+		lineageTag: f-km-rod-col-mes-004
+		summarizeBy: none
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: f-km-rod-col-ano-005
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: f-km-rod-col-data-006
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Reduzido'
+		dataType: string
+		sourceProviderType: nvarchar(255)
+		lineageTag: f-km-rod-col-nome-red-007
+		summarizeBy: none
+		sourceColumn: Nome Reduzido
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_KM_Rodados = m
+		mode: import
+		source =
+				let
+					Fonte = Excel.Workbook(File.Contents("C:\Users\luicarvalho\OneDrive - EDENRED\Área de Trabalho\MTBF-PLACA-CARLOS.Report\4 -  KM Rodado_Geral 1.xlsx"), true),
+					Planilha1 = Fonte{[Item="KM rodado",Kind="Sheet"]}[Data],
+					TiposAlterados = Table.TransformColumnTypes(Planilha1, {
+						{"Placa", type text},
+						{"Família do Veículo", type text},
+						{"Nome Reduzido", type text},
+						{"KM Rodados GEF", Int64.Type},
+						{"Mês", Int64.Type},
+						{"Ano", Int64.Type},
+						{"Data", type datetime}
+					}),
+					FiltroKM = Table.SelectRows(TiposAlterados, each [KM Rodados GEF] > 0),
+					ColunasFinais = Table.SelectColumns(FiltroKM, {"Placa", "KM Rodados GEF", "Família do Veículo", "Mês", "Ano", "Data", "Nome Reduzido"})
+				in
+					ColunasFinais
+
+	annotation PBI_ResultType = Table
+
