@@ -204,7 +204,7 @@ table f_MTBF
 				
 				    // PASSO 1: Filtra fact_maintenanceservices — últimos 12 meses + KM válido
 				    fs_filtrado = Table.SelectRows(fs, each
-				        [ServiceStartTimestamp] >= Date.AddYears(DateTime.LocalNow(), -1)
+				        [ServiceStartTimestamp] >= Date.StartOfMonth(Date.AddMonths(DateTime.LocalNow(), -11))
 				        and [MileageNumber] <> null
 				        and [MileageNumber] >= 100
 				        and [MileageNumber] <= 900000),

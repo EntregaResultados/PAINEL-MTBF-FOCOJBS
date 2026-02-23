@@ -1,28 +1,28 @@
 table _Medidas
 	lineageTag: measures-table-001
 
-	/// Distância total percorrida pela frota.
-	/// Calcula a variação de odômetro (Max KM - Min KM) para cada placa
-	/// e soma o resultado de todas as placas no contexto de filtro.
-	/// Filtra outliers: ignora KM <= 0 e KM > 900000 (dados inválidos).
-	/// Ref: Manager §1.2 + Validação Databricks 2026-02-14
+	/// Distância total percorrida pela frota (f_KM_Rodados).
+	/// SEMPRE usa TREATAS para propagar filtro de Placa de f_MTBF → f_KM_Rodados.
+	/// Isso garante que filtros indiretos (Regional, Operação, etc.) em f_MTBF
+	/// restrinjam corretamente quais placas contribuem para o KM.
+	/// Quando eixo = f_MTBF.MesRef → filtra também por mês/ano.
+	/// Corrigido 2026-02-23: antes não filtrava por Regional (spike no chart).
 	measure 'Distancia Total KM' =
-			SUMX(
-			    VALUES('f_MTBF'[Placa]),
-			    VAR MaxKM = CALCULATE(
-			        MAX('f_MTBF'[KM]),
-			        'f_MTBF'[KM] >= 100,
-			        'f_MTBF'[KM] <= 900000
-			    )
-			    VAR MinKM = CALCULATE(
-			        MIN('f_MTBF'[KM]),
-			        'f_MTBF'[KM] >= 100,
-			        'f_MTBF'[KM] <= 900000
-			    )
-			    RETURN IF(
-			        NOT ISBLANK(MaxKM) && NOT ISBLANK(MinKM),
-			        MaxKM - MinKM,
-			        BLANK()
+			VAR _mesRefCount = COUNTROWS(VALUES('f_MTBF'[MesRef]))
+			VAR _mes = MONTH(MIN('f_MTBF'[MesRef]))
+			VAR _ano = YEAR(MIN('f_MTBF'[MesRef]))
+			RETURN
+			IF(
+			    _mesRefCount = 1,
+			    CALCULATE(
+			        SUM('f_KM_Rodados'[KM Rodados]),
+			        'f_KM_Rodados'[Mes] = _mes,
+			        'f_KM_Rodados'[Ano] = _ano,
+			        TREATAS(VALUES('f_MTBF'[Placa]), 'f_KM_Rodados'[Placa])
+			    ),
+			    CALCULATE(
+			        SUM('f_KM_Rodados'[KM Rodados]),
+			        TREATAS(VALUES('f_MTBF'[Placa]), 'f_KM_Rodados'[Placa])
 			    )
 			)
 		formatString: #,##0 "KM"
